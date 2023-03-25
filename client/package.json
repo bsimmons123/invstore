@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
@@ -23,8 +24,8 @@
     "@vue/eslint-config-airbnb": "^5.0.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.1.1",
-    "eslint-plugin-vue": "^9.10.0",
     "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^9.10.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
