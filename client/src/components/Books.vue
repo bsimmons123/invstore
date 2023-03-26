@@ -254,6 +254,7 @@ export default {
   },
   created() {
     this.getBooks();
+    document.title = 'Books!';
   },
 };
 </script>
