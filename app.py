@@ -9,6 +9,8 @@ app.config.from_object(__name__)
 
 # enable CORS
 CORS(app, resources={r'/*': {'origins': ''}})
+# Adding multiple origins
+# {'origins': ['https://example.com', 'https://subdomain.example.com']}
 
 defaultPath = '/api'
 
