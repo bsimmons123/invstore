@@ -1,9 +1,9 @@
 {
-  "name": "books",
+  "name": "catering",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --open --config vue.config.js",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
