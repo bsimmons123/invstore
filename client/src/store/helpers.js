@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 const paths = {
   root: '/api',
   items: '/api/items',
@@ -7,4 +6,11 @@ const paths = {
   },
 };
 
-export default paths;
+const messageTypes = {
+  warning: 'warning',
+  primary: 'primary',
+  danger: 'danger',
+  success: 'success',
+};
+
+export { paths, messageTypes };

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import paths from './helpers';
+import { paths, messageTypes } from './helpers';
 
 Vue.use(Vuex);
 
@@ -10,6 +10,8 @@ export default new Vuex.Store({
     items: [],
     message: '',
     showMessage: false,
+    messageType: messageTypes,
+    alertDismissCountdown: 0,
   },
   mutations: {
     setItems(state, payload) {
@@ -34,8 +36,14 @@ export default new Vuex.Store({
     setMessage(state, payload) {
       state.message = payload;
     },
-    toggleShowMessage(state) {
-      state.showMessage = !state.showMessage;
+    toggleShowMessage(state, payload) {
+      state.showMessage = payload;
+    },
+    setMessageType(state, payload) {
+      state.messageType = payload;
+    },
+    setAlertDismissCountdown(state, payload) {
+      state.alertDismissCountdown = payload;
     },
   },
   actions: {
@@ -54,7 +62,9 @@ export default new Vuex.Store({
         .then((res) => {
           state.commit('addItem', payload);
           state.commit('setMessage', res.data.message);
-          state.commit('toggleShowMessage');
+          state.commit('setMessageType', messageTypes.success);
+          state.commit('toggleShowMessage', true);
+          state.commit('setAlertDismissCountdown', 5);
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -68,7 +78,9 @@ export default new Vuex.Store({
         .then((res) => {
           state.commit('editItem', payload);
           state.commit('setMessage', res.data.message);
-          state.commit('toggleShowMessage');
+          state.commit('setMessageType', messageTypes.success);
+          state.commit('setAlertDismissCountdown', 5);
+          state.commit('toggleShowMessage', true);
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -80,14 +92,14 @@ export default new Vuex.Store({
         .then((res) => {
           state.commit('deleteItem', payload);
           state.commit('setMessage', res.data.message);
-          state.commit('toggleShowMessage');
+          state.commit('toggleShowMessage', true);
+          state.commit('setAlertDismissCountdown', 5);
+          state.commit('setMessageType', messageTypes.warning);
         })
         .catch((error) => {
           // eslint-disable-next-line
           console.error(error);
         });
     },
-  },
-  modules: {
   },
 });

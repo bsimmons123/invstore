@@ -4,7 +4,14 @@
       <div class="col-sm-10">
         <h1>Catering</h1>
         <hr><br><br>
-        <alert :message=message v-if="showMessage"></alert>
+        <alert
+          :message=getMessage
+          :message-type="getMessageType"
+          :dismiss-count-down="getAlertCountdown"
+          v-if="showMessage"
+          @dismiss="dismissAlert"
+          @updateCountdown="updateDismissAlert"
+        />
         <button type="button" class="btn btn-success btn-sm" v-b-modal.add-modal>Add Item</button>
         <br><br>
         <table class="table table-hover">
@@ -139,7 +146,6 @@ export default {
         sweet: false,
       },
       message: '',
-      showMessage: false,
     };
   },
   components: {
@@ -147,7 +153,16 @@ export default {
   },
   methods: {
     editItem(item) {
-      this.editItemForm = item;
+      this.editItemForm.id = item.id;
+      this.editItemForm.name = item.name;
+      this.editItemForm.type = item.type;
+      this.editItemForm.sweet = item.sweet;
+    },
+    dismissAlert() {
+      this.$store.commit('setAlertDismissCountdown', 0);
+    },
+    updateDismissAlert(payload) {
+      this.$store.commit('setAlertDismissCountdown', payload);
     },
     onSubmitUpdate(evt) {
       evt.preventDefault();
@@ -181,11 +196,11 @@ export default {
     initForm() {
       this.addItemForm.name = '';
       this.addItemForm.type = '';
-      this.addItemForm.sweet = [];
+      this.addItemForm.sweet = false;
       this.editItemForm.id = '';
       this.editItemForm.name = '';
       this.editItemForm.type = '';
-      this.editItemForm.sweet = [];
+      this.editItemForm.sweet = false;
     },
     onSubmit(evt) {
       evt.preventDefault();
@@ -213,6 +228,18 @@ export default {
   computed: {
     getItems() {
       return store.state.items;
+    },
+    showMessage() {
+      return store.state.showMessage;
+    },
+    getMessage() {
+      return store.state.message;
+    },
+    getMessageType() {
+      return store.state.messageType;
+    },
+    getAlertCountdown() {
+      return store.state.alertDismissCountdown;
     },
   },
 };
