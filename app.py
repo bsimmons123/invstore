@@ -8,7 +8,7 @@ app = Flask(__name__, static_folder='./dist/static',
 app.config.from_object(__name__)
 
 # enable CORS
-CORS(app, resources={r'/*': {'origins': '*'}})
+CORS(app, resources={r'/*': {'origins': ''}})
 
 defaultPath = '/api'
 
