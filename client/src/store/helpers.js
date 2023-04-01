@@ -1,8 +1,8 @@
 const paths = {
-  root: '/api',
-  items: '/api/items',
+  root: '/',
+  items: '/items',
   getItemUrl(id) {
-    return `/api/items/${id}`;
+    return `/items/${id}`;
   },
 };
 
