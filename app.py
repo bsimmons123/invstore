@@ -89,22 +89,22 @@ def hello_world():
 
 @app.route('/apple-touch-icon.png', methods=['GET'])
 def favicon_apple():
-    return send_from_directory(app.template_folder+'/favicon_io', 'apple-touch-icon.png')
+    return send_from_directory(app.template_folder, 'apple-touch-icon.png')
 
 
 @app.route('/favicon-32x32.png', methods=['GET'])
 def favicon_32():
-    return send_from_directory(app.template_folder+'/favicon_io', 'favicon-32x32.png')
+    return send_from_directory(app.template_folder, 'favicon-32x32.png')
 
 
 @app.route('/favicon-16x16.png', methods=['GET'])
 def favicon_16():
-    return send_from_directory(app.template_folder+'/favicon_io', 'favicon-16x16.png')
+    return send_from_directory(app.template_folder, 'favicon-16x16.png')
 
 
 @app.route('/site.webmanifest', methods=['GET'])
 def manifest():
-    return send_from_directory(app.template_folder+'/favicon_io', 'site.webmanifest')
+    return send_from_directory(app.template_folder, 'site.webmanifest')
 
 
 if __name__ == '__main__':
