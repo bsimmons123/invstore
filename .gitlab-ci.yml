@@ -10,6 +10,7 @@ variables:
 
 stages:
   - build
+  - deploy
 
 docker-build:
   stage: build
@@ -25,7 +26,7 @@ docker-build:
         --file ./Dockerfile
         "."
 
-deploy:
+heroku-deploy:
   stage: deploy
   script:
     - docker build
