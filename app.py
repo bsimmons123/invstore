@@ -35,7 +35,7 @@ Items = [
 
 
 @app.route('/items', methods=['GET', 'POST'])
-def all_books():
+def all_items():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()
@@ -52,15 +52,15 @@ def all_books():
 
 
 @app.route('/items/<item_id>', methods=['PUT', 'DELETE'])
-def single_book(item_id):
+def single_item(item_id):
     response_object = {'status': 'success'}
     if request.method == 'PUT':
         post_data = request.get_json()
         edit_item(item_id, post_data)
-        response_object['message'] = 'Book updated!'
+        response_object['message'] = 'Item updated!'
     if request.method == 'DELETE':
         remove_item(item_id)
-        response_object['message'] = 'Book removed!'
+        response_object['message'] = 'Item removed!'
     return jsonify(response_object)
 
 
@@ -75,9 +75,9 @@ def remove_item(item_id):
 def edit_item(item_id, updated_item):
     for item in Items:
         if item['id'] == item_id:
-            item['name'] = updated_item['name']
-            item['type'] = updated_item['type']
-            item['sweet'] = updated_item['sweet']
+            item['name'] = updated_item['payload']['name']
+            item['type'] = updated_item['payload']['type']
+            item['sweet'] = updated_item['payload']['sweet']
             return True
     return False
 
