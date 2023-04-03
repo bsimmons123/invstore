@@ -28,6 +28,7 @@ docker-build:
 
 heroku-deploy:
   stage: deploy
+  when: manual
   script:
     - docker build
         --cache-from $CACHE_IMAGE:production
