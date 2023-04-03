@@ -32,6 +32,7 @@ heroku-deploy:
   needs: 
     - docker-build
   script:
+    - apk add --no-cache curl
     - docker build
         --cache-from $CACHE_IMAGE:production
         --tag $CACHE_IMAGE:production
