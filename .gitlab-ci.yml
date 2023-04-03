@@ -24,6 +24,10 @@ docker-build:
         --tag $CACHE_IMAGE:build-vue
         --file ./Dockerfile
         "."
+
+heroku-deploy:
+  stage: deploy
+  script:
     - docker build
         --cache-from $CACHE_IMAGE:production
         --tag $CACHE_IMAGE:production
