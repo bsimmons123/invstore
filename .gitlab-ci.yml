@@ -39,6 +39,7 @@ heroku-deploy:
         --tag $HEROKU_REGISTRY_IMAGE
         --file ./Dockerfile
         "."
+    - docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
     - docker push $CACHE_IMAGE:build-vue
     - docker push $CACHE_IMAGE:production
     - docker login -u _ -p $HEROKU_AUTH_TOKEN registry.heroku.com
