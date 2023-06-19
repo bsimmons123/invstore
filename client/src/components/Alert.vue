@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="message">
     <b-alert
       :show="dismissCountDown"
       dismissible
@@ -15,7 +15,6 @@
         height="4px"
       ></b-progress>
     </b-alert>
-    <br>
   </div>
 </template>
 

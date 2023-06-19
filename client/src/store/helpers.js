@@ -13,4 +13,16 @@ const messageTypes = {
   success: 'success',
 };
 
-export { paths, messageTypes };
+const foodTypes = {
+  sweet: 'Sweet',
+  sour: 'Sour',
+  american: 'American',
+  seafood: 'SeaFood',
+  italian: 'Italian',
+  french: 'French',
+  chinese: 'Chinese',
+  dessert: 'Dessert',
+  thai: 'Thai',
+};
+
+export { paths, messageTypes, foodTypes };

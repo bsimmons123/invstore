@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import CateringItem from '@/store/model';
 import { paths, messageTypes } from './helpers';
 
 Vue.use(Vuex);
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     showMessage: false,
     messageType: messageTypes,
     alertDismissCountdown: 0,
+    editItem: new CateringItem(),
   },
   mutations: {
     setItems(state, payload) {
@@ -31,7 +33,6 @@ export default new Vuex.Store({
       const index = state.items.findIndex((item) => item.id === id);
       state.items[index].name = updatedItem.payload.name;
       state.items[index].type = updatedItem.payload.type;
-      state.items[index].sweet = updatedItem.payload.sweet;
     },
     setMessage(state, payload) {
       state.message = payload;

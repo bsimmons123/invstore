@@ -16,20 +16,17 @@ Items = [
     {
         'id': uuid.uuid4().hex,
         'name': 'Cake',
-        'type': 'Dessert',
-        'sweet': True
+        'type': 'Dessert'
     },
     {
         'id': uuid.uuid4().hex,
         'name': 'Pizza',
-        'type': 'Dinner',
-        'sweet': False
+        'type': 'Dinner'
     },
     {
         'id': uuid.uuid4().hex,
         'name': 'Green Eggs and Ham',
-        'type': 'Breakfast',
-        'sweet': False
+        'type': 'Breakfast'
     }
 ]
 
@@ -43,7 +40,6 @@ def all_items():
             'id': uuid.uuid4().hex,
             'name': post_data.get('name'),
             'type': post_data.get('type'),
-            'sweet': post_data.get('sweet')
         })
         response_object['message'] = 'Item added!'
     else:
@@ -77,7 +73,6 @@ def edit_item(item_id, updated_item):
         if item['id'] == item_id:
             item['name'] = updated_item['payload']['name']
             item['type'] = updated_item['payload']['type']
-            item['sweet'] = updated_item['payload']['sweet']
             return True
     return False
 
