@@ -36,12 +36,14 @@ def all_items():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()
-        Items.append({
+        item = {
             'id': uuid.uuid4().hex,
             'name': post_data.get('name'),
             'type': post_data.get('type'),
-        })
+        }
+        Items.append(item)
         response_object['message'] = 'Item added!'
+        response_object['obj'] = item
     else:
         response_object['items'] = Items
     return jsonify(response_object)

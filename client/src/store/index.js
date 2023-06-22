@@ -16,34 +16,34 @@ export default new Vuex.Store({
     editItem: new CateringItem(),
   },
   mutations: {
-    setItems(state, payload) {
+    SET_ITEMS(state, payload) {
       state.items = payload;
     },
-    addItem(state, payload) {
+    ADD_ITEM(state, payload) {
       state.items.push(payload);
     },
-    deleteItem(state, payload) {
+    DELETE_ITEM(state, payload) {
       const index = state.items.findIndex((item) => item.id === payload);
       if (index !== -1) {
         state.items.splice(index, 1);
       }
     },
-    editItem(state, payload) {
+    EDIT_ITEM(state, payload) {
       const { id, ...updatedItem } = payload;
       const index = state.items.findIndex((item) => item.id === id);
       state.items[index].name = updatedItem.payload.name;
       state.items[index].type = updatedItem.payload.type;
     },
-    setMessage(state, payload) {
+    SET_MESSAGE(state, payload) {
       state.message = payload;
     },
-    toggleShowMessage(state, payload) {
+    TOGGLE_SHOW_MESSAGE(state, payload) {
       state.showMessage = payload;
     },
-    setMessageType(state, payload) {
+    SET_MESSAGE_TYPE(state, payload) {
       state.messageType = payload;
     },
-    setAlertDismissCountdown(state, payload) {
+    SET_ALERT_COUNTDOWN(state, payload) {
       state.alertDismissCountdown = payload;
     },
   },
@@ -51,7 +51,7 @@ export default new Vuex.Store({
     getAllItems(state) {
       axios.get(`${paths.items}`)
         .then((res) => {
-          state.commit('setItems', res.data.items);
+          state.commit('SET_ITEMS', res.data.items);
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -61,11 +61,11 @@ export default new Vuex.Store({
     addItem(state, payload) {
       axios.post(`${paths.items}`, payload)
         .then((res) => {
-          state.commit('addItem', payload);
-          state.commit('setMessage', res.data.message);
-          state.commit('setMessageType', messageTypes.success);
-          state.commit('toggleShowMessage', true);
-          state.commit('setAlertDismissCountdown', 5);
+          state.commit('ADD_ITEM', res.data.obj);
+          state.commit('SET_MESSAGE', res.data.message);
+          state.commit('SET_MESSAGE_TYPE', messageTypes.success);
+          state.commit('TOGGLE_SHOW_MESSAGE', true);
+          state.commit('SET_ALERT_COUNTDOWN', 5);
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -77,11 +77,11 @@ export default new Vuex.Store({
       const { id, ...updatedItem } = payload;
       axios.put(`${paths.getItemUrl(id)}`, updatedItem)
         .then((res) => {
-          state.commit('editItem', payload);
-          state.commit('setMessage', res.data.message);
-          state.commit('setMessageType', messageTypes.success);
-          state.commit('setAlertDismissCountdown', 5);
-          state.commit('toggleShowMessage', true);
+          state.commit('EDIT_ITEM', payload);
+          state.commit('SET_MESSAGE', res.data.message);
+          state.commit('SET_MESSAGE_TYPE', messageTypes.success);
+          state.commit('SET_ALERT_COUNTDOWN', 5);
+          state.commit('TOGGLE_SHOW_MESSAGE', true);
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -91,11 +91,11 @@ export default new Vuex.Store({
     deleteItem(state, payload) {
       axios.delete(paths.getItemUrl(payload))
         .then((res) => {
-          state.commit('deleteItem', payload);
-          state.commit('setMessage', res.data.message);
-          state.commit('toggleShowMessage', true);
-          state.commit('setAlertDismissCountdown', 5);
-          state.commit('setMessageType', messageTypes.warning);
+          state.commit('DELETE_ITEM', payload);
+          state.commit('SET_MESSAGE', res.data.message);
+          state.commit('TOGGLE_SHOW_MESSAGE', true);
+          state.commit('SET_ALERT_COUNTDOWN', 5);
+          state.commit('SET_MESSAGE_TYPE', messageTypes.warning);
         })
         .catch((error) => {
           // eslint-disable-next-line

@@ -60,10 +60,10 @@ export default {
       this.$store.state.editItem = item;
     },
     dismissAlert() {
-      this.$store.commit('setAlertDismissCountdown', 0);
+      this.$store.commit('SET_ALERT_COUNTDOWN', 0);
     },
     updateDismissAlert(payload) {
-      this.$store.commit('setAlertDismissCountdown', payload);
+      this.$store.commit('SET_ALERT_COUNTDOWN', payload);
     },
     onSubmitUpdate() {
       this.updateItem(this.$store.state.editItem, this.$store.state.editItem.id);
