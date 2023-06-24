@@ -3,6 +3,6 @@ import RouterList from '@/global-helpers/routerList';
 
 export default {
   path: '/',
-  name: RouterList.routes.homeList.label,
+  name: RouterList.routes.homeList.value,
   component: List,
 };
