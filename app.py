@@ -10,7 +10,7 @@ app.config.from_object(__name__)
 # enable CORS
 CORS(app, resources={r'/*': {'origins': ''}})
 
-# defaultPath = '/api'
+defaultPath = '/api'
 
 Items = [
     {
@@ -31,7 +31,7 @@ Items = [
 ]
 
 
-@app.route('/items', methods=['GET', 'POST'])
+@app.route(defaultPath + '/items', methods=['GET', 'POST'])
 def all_items():
     response_object = {'status': 'success'}
     if request.method == 'POST':
@@ -49,7 +49,7 @@ def all_items():
     return jsonify(response_object)
 
 
-@app.route('/items/<item_id>', methods=['PUT', 'DELETE'])
+@app.route(defaultPath + '/items/<item_id>', methods=['PUT', 'DELETE'])
 def single_item(item_id):
     response_object = {'status': 'success'}
     if request.method == 'PUT':
