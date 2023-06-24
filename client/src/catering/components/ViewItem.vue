@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import CateringItem from '@/store/model';
+import CateringItem from '@/catering/store/model';
 
 export default {
   name: 'ViewItem',
