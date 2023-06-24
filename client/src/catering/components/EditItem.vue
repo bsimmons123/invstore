@@ -9,7 +9,7 @@
                   label-for="form-name-edit-input">
         <b-form-input id="form-name-edit-input"
                       type="text"
-                      :value="item.name" @input="$emit('itemNameChange', $event)"
+                      :value="item ? item.name : ''" @input="$emit('itemNameChange', $event)"
                       required
                       placeholder="Enter name">
         </b-form-input>
@@ -19,7 +19,7 @@
                     label-for="form-author-edit-input">
           <b-form-input id="form-author-edit-input"
                         type="text"
-                        :value="item.type" @input="$emit('itemTypeChange', $event)"
+                        :value="item ? item.type : ''" @input="$emit('itemTypeChange', $event)"
                         required
                         placeholder="Enter type">
           </b-form-input>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import CateringItem from '@/store/model';
+import CateringItem from '@/catering/store/model';
 
 export default {
   name: 'EditItem',

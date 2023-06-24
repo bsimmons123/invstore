@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <alert
       :message=getMessage
       :message-type="getMessageType"
@@ -12,7 +12,7 @@
     <br><br>
     <view-item
       :items="getItems"
-      @populateEditItem="editItem"
+      @populateEditItem="updateEditItem"
       @populateIdDelete="onDeleteItem"
     />
     <add-item
@@ -23,7 +23,7 @@
       @onAddReset="onResetUpdate"
     />
     <edit-item
-      :item="$store.state.editItem"
+      :item="editItem"
       @itemNameChange="updateItemNameEdit"
       @itemTypeChange="itemTypeChangeEdit"
       @onEdit="onSubmitUpdate"
@@ -33,12 +33,13 @@
 </template>
 
 <script>
-import EditItem from '@/components/EditItem.vue';
-import AddItem from '@/components/AddItem.vue';
-import ViewItem from '@/components/ViewItem.vue';
-import CateringItem from '@/store/model';
+import store from '@/stores/store/catering/index';
+import CateringItem from '@/catering/store/model';
+import { mapGetters } from 'vuex';
+import EditItem from './EditItem.vue';
+import AddItem from './AddItem.vue';
+import ViewItem from './ViewItem.vue';
 import Alert from './Alert.vue';
-import store from '../store/index';
 
 export default {
   name: 'CateringList',
@@ -56,8 +57,8 @@ export default {
     alert: Alert,
   },
   methods: {
-    editItem(item) {
-      this.$store.state.editItem = item;
+    updateEditItem(item) {
+      this.$store.commit('SET_EDIT_ITEM', item);
     },
     dismissAlert() {
       this.$store.commit('SET_ALERT_COUNTDOWN', 0);
@@ -66,16 +67,16 @@ export default {
       this.$store.commit('SET_ALERT_COUNTDOWN', payload);
     },
     onSubmitUpdate() {
-      this.updateItem(this.$store.state.editItem, this.$store.state.editItem.id);
+      this.updateItem(this.editItem, this.editItem.id);
     },
     removeItem(itemID) {
       this.$store.dispatch('deleteItem', itemID);
     },
     updateItemNameEdit(name) {
-      this.$store.state.editItem.name = name;
+      this.editItem.name = name;
     },
     itemTypeChangeEdit(type) {
-      this.$store.state.editItem.type = type;
+      this.editItem.type = type;
     },
     updateItemName(name) {
       this.addItemForm.name = name;
@@ -121,6 +122,9 @@ export default {
     document.title = 'Catering';
   },
   computed: {
+    ...mapGetters({
+      editItem: 'getEditItem',
+    }),
     getItems() {
       return store.state.items;
     },

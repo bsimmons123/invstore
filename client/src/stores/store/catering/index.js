@@ -1,17 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
-import CateringItem from '@/store/model';
-import { paths, messageTypes } from './helpers';
+import CateringItem from '@/catering/store/model';
+import Helpers from '@/catering/store/helpers';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+export default {
   state: {
     items: [],
     message: '',
     showMessage: false,
-    messageType: messageTypes,
+    messageType: Helpers.messageTypes,
     alertDismissCountdown: 0,
     editItem: new CateringItem(),
   },
@@ -46,10 +46,13 @@ export default new Vuex.Store({
     SET_ALERT_COUNTDOWN(state, payload) {
       state.alertDismissCountdown = payload;
     },
+    SET_EDIT_ITEM(state, payload) {
+      state.editItem = payload;
+    },
   },
   actions: {
     getAllItems(state) {
-      axios.get(`${paths.items}`)
+      axios.get(`${Helpers.paths.getItems()}`)
         .then((res) => {
           state.commit('SET_ITEMS', res.data.items);
         })
@@ -59,11 +62,11 @@ export default new Vuex.Store({
         });
     },
     addItem(state, payload) {
-      axios.post(`${paths.items}`, payload)
+      axios.post(`${Helpers.paths.getItems()}`, payload)
         .then((res) => {
           state.commit('ADD_ITEM', res.data.obj);
           state.commit('SET_MESSAGE', res.data.message);
-          state.commit('SET_MESSAGE_TYPE', messageTypes.success);
+          state.commit('SET_MESSAGE_TYPE', Helpers.messageTypes.success);
           state.commit('TOGGLE_SHOW_MESSAGE', true);
           state.commit('SET_ALERT_COUNTDOWN', 5);
         })
@@ -75,11 +78,11 @@ export default new Vuex.Store({
     editItem(state, payload) {
       // Destructure the id and rest of the properties into updatedItem
       const { id, ...updatedItem } = payload;
-      axios.put(`${paths.getItemUrl(id)}`, updatedItem)
+      axios.put(`${Helpers.paths.getItemUrl(id)}`, updatedItem)
         .then((res) => {
           state.commit('EDIT_ITEM', payload);
           state.commit('SET_MESSAGE', res.data.message);
-          state.commit('SET_MESSAGE_TYPE', messageTypes.success);
+          state.commit('SET_MESSAGE_TYPE', Helpers.messageTypes.success);
           state.commit('SET_ALERT_COUNTDOWN', 5);
           state.commit('TOGGLE_SHOW_MESSAGE', true);
         })
@@ -89,13 +92,13 @@ export default new Vuex.Store({
         });
     },
     deleteItem(state, payload) {
-      axios.delete(paths.getItemUrl(payload))
+      axios.delete(Helpers.paths.getItemUrl(payload))
         .then((res) => {
           state.commit('DELETE_ITEM', payload);
           state.commit('SET_MESSAGE', res.data.message);
           state.commit('TOGGLE_SHOW_MESSAGE', true);
           state.commit('SET_ALERT_COUNTDOWN', 5);
-          state.commit('SET_MESSAGE_TYPE', messageTypes.warning);
+          state.commit('SET_MESSAGE_TYPE', Helpers.messageTypes.warning);
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -103,4 +106,7 @@ export default new Vuex.Store({
         });
     },
   },
-});
+  getters: {
+    getEditItem: (state) => state.editItem,
+  },
+};

@@ -1,11 +1,11 @@
-import { foodTypes } from '@/store/helpers';
+import Helpers from './helpers';
 
 export default class CateringItem {
     id = null;
 
     name = null;
 
-    type = foodTypes;
+    type = Helpers.foodTypes;
 
     constructor(id, name, type) {
       this.id = id;
