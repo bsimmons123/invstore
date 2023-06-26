@@ -1,12 +1,12 @@
 export default class Helpers {
   static paths = {
     root: '/api',
-    items: '/items',
+    items: '/catering/v1/catering/items',
     getItems() {
       return this.root + this.items;
     },
     getItemUrl(id) {
-      return `${this.root}/items/${id}`;
+      return `${this.root}/${this.items}/${id}`;
     },
   };
 
