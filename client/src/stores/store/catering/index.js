@@ -54,7 +54,7 @@ export default {
     getAllItems(state) {
       axios.get(`${Helpers.paths.getItems()}`)
         .then((res) => {
-          state.commit('SET_ITEMS', res.data.items);
+          state.commit('SET_ITEMS', res.data);
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -78,7 +78,7 @@ export default {
     editItem(state, payload) {
       // Destructure the id and rest of the properties into updatedItem
       const { id, ...updatedItem } = payload;
-      axios.put(`${Helpers.paths.getItemUrl(id)}`, updatedItem)
+      axios.put(`${Helpers.paths.getItemUrl(id)}`, updatedItem.payload)
         .then((res) => {
           state.commit('EDIT_ITEM', payload);
           state.commit('SET_MESSAGE', res.data.message);
