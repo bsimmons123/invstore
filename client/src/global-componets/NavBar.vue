@@ -16,12 +16,19 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
+      <!-- Right aligned nav items -->
+      <b-navbar-nav class="ml-auto">
+        <b-nav-item @click="logout">Logout</b-nav-item>
+      </b-navbar-nav>
     </b-navbar>
   </div>
 </template>
 
 <script>
 import RouterList from '@/global-helpers/routerList';
+import { mapActions } from 'vuex';
+import StoreIndex from '../login/store/_StoreIndex';
+import { StoreActions } from '../login/store/actions';
 
 export default {
   name: 'NavBar',
@@ -31,6 +38,9 @@ export default {
     };
   },
   methods: {
+    ...mapActions(StoreIndex.storeName, {
+      logout: StoreActions.logout,
+    }),
     navigateToRoute(routeName) {
       if (this.$router.currentRoute.name !== routeName) {
         this.$router.push({ name: routeName });

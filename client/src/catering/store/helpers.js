@@ -2,19 +2,16 @@ export default class Helpers {
   static paths = {
     root: '/api',
     items: '/catering/v1/catering/items',
+    cateringList: '/catering/v1/catering/catering_list',
     getItems() {
       return this.root + this.items;
     },
     getItemUrl(id) {
       return `${this.root}/${this.items}/${id}`;
     },
-  };
-
-  static messageTypes = {
-    warning: 'warning',
-    primary: 'primary',
-    danger: 'danger',
-    success: 'success',
+    getCateringList() {
+      return this.root + this.cateringList;
+    }
   };
 
   static foodTypes = {

@@ -14,14 +14,31 @@ const routes = [];
 // loop over the files in the ./routes directory
 autoLoadedFiles.keys().forEach((fileName) => {
   // get the default exported object from the route file and push it to the routes array
-  routes.push(autoLoadedFiles(fileName).default);
+  const routeObjects = autoLoadedFiles(fileName).default;
+  if (Array.isArray(routeObjects)) {
+    routes.push(...routeObjects);
+  } else {
+    routes.push(routeObjects);
+  }
 });
 
 routes.push({ path: '*', redirect: '/' });
 
 const router = new VueRouter({
   base: `${process.env.BASE_URL}`,
+  mode: 'history',
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  let isLoggedIn = localStorage.getItem('logged_in');
+  if (to.meta.requiresAuth && isLoggedIn === null) {
+    if (from.path !== '/login') {
+      next('/login'); // Redirect to login page if not authenticated
+    }
+  } else {
+    next(); // Proceed to the requested route
+  }
 });
 
 export default router;

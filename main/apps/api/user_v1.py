@@ -1,19 +1,19 @@
 from flask import Blueprint
 from flask_restx import Api
 from werkzeug.exceptions import HTTPException
-from .catering.controllers.items import api as catering_api
+from .users.users import api as user_api
 from ... import defaultPath
 
-blueprint = Blueprint('catering_api', __name__, url_prefix=defaultPath + '/catering/v1')
+user_blueprint = Blueprint('user_api', __name__, url_prefix=defaultPath + '/user/v1')
 
-api = Api(blueprint,
+api = Api(user_blueprint,
           doc='/doc/',
-          title='Resource API - Profile',
+          title='Resource API - User',
           version='1.0',
           description='A description'
           )
 
-api.add_namespace(catering_api)
+api.add_namespace(user_api)
 
 
 @api.errorhandler(HTTPException)

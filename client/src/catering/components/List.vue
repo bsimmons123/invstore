@@ -16,11 +16,7 @@
       @populateIdDelete="onDeleteItem"
     />
     <add-item
-      :item="addItemForm"
-      @itemNameChange="updateItemName"
-      @itemTypeChange="itemTypeChange"
-      @onAdd="onSubmit"
-      @onAddReset="onResetUpdate"
+      :list-id="this.listId"
     />
     <edit-item
       :item="editItem"
@@ -33,53 +29,66 @@
 </template>
 
 <script>
-import store from '@/stores/store/catering/index';
-import CateringItem from '@/catering/store/model';
-import { mapGetters } from 'vuex';
+import {mapActions, mapState} from 'vuex';
 import EditItem from './EditItem.vue';
 import AddItem from './AddItem.vue';
 import ViewItem from './ViewItem.vue';
-import Alert from './Alert.vue';
+import Alert from '../../global-componets/Alert.vue';
+import StoreIndex from '../store/_StoreIndex';
+import { StoreMutations } from '../store/mutations';
+import { StoreState } from '../store/state';
+import { StoreActions } from '../store/actions';
+import CateringItemAdapter from "../store/adapters/CateringItemAdapter";
 
 export default {
   name: 'CateringList',
   data() {
     return {
-      addItemForm: new CateringItem(),
-      editItemForm: new CateringItem(),
+      editItemForm: new CateringItemAdapter(),
       message: '',
     };
   },
+  props: ['listId'],
   components: {
     ViewItem,
     AddItem,
     EditItem,
     alert: Alert,
   },
+  computed: {
+    ...mapState(StoreIndex.storeName, {
+      getItems: `${StoreState.items}`,
+      showMessage: `${StoreState.showMessage}`,
+      getMessage: `${StoreState.message}`,
+      getMessageType: `${StoreState.messageType}`,
+      getAlertCountdown: `${StoreState.alertDismissCountdown}`,
+      editItem: `${StoreState.editItem}`
+    }),
+  },
   methods: {
+    ...mapActions(StoreIndex.storeName, {
+      getItemsFromList: StoreActions.getAllItems
+    }),
     updateEditItem(item) {
-      this.$store.commit('SET_EDIT_ITEM', item);
+      this.$store.commit(`${StoreIndex.storeName}/${StoreMutations.SET_EDIT_ITEM}`, item);
     },
     dismissAlert() {
-      this.$store.commit('SET_ALERT_COUNTDOWN', 0);
+      this.$store.commit(`${StoreIndex.storeName}/${StoreMutations.SET_ALERT_COUNTDOWN}`, 0);
     },
     updateDismissAlert(payload) {
-      this.$store.commit('SET_ALERT_COUNTDOWN', payload);
+      this.$store.commit(`${StoreIndex.storeName}/${StoreMutations.SET_ALERT_COUNTDOWN}`, payload);
     },
     onSubmitUpdate() {
       this.updateItem(this.editItem, this.editItem.id);
     },
     removeItem(itemID) {
-      this.$store.dispatch('deleteItem', itemID);
+      this.$store.dispatch(`${StoreIndex.storeName}/${StoreActions.deleteItem}`, itemID);
     },
     updateItemNameEdit(name) {
       this.editItem.name = name;
     },
     itemTypeChangeEdit(type) {
       this.editItem.type = type;
-    },
-    updateItemName(name) {
-      this.addItemForm.name = name;
     },
     itemTypeChange(type) {
       this.addItemForm.type = type;
@@ -88,13 +97,10 @@ export default {
       this.removeItem(id);
     },
     updateItem(payload, id) {
-      this.$store.dispatch('editItem', { payload, id });
+      this.$store.dispatch(`${StoreIndex.storeName}/${StoreActions.editItem}`, { payload, id });
     },
     onResetUpdate() {
       this.initForm();
-    },
-    addItem(payload) {
-      this.$store.dispatch('addItem', payload);
     },
     initForm() {
       this.addItemForm.name = '';
@@ -118,28 +124,9 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch('getAllItems');
+    console.log("getting items")
+    this.getItemsFromList(this.listId)
     document.title = 'Catering';
-  },
-  computed: {
-    ...mapGetters({
-      editItem: 'getEditItem',
-    }),
-    getItems() {
-      return store.state.items;
-    },
-    showMessage() {
-      return store.state.showMessage;
-    },
-    getMessage() {
-      return store.state.message;
-    },
-    getMessageType() {
-      return store.state.messageType;
-    },
-    getAlertCountdown() {
-      return store.state.alertDismissCountdown;
-    },
-  },
+  }
 };
 </script>

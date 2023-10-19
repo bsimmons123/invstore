@@ -9,8 +9,8 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in items" :key="index">
-        <td>{{ item.name }}</td>
-        <td>{{ item.type }}</td>
+        <td>{{ item.label }}</td>
+        <td>{{ item.type.label }}</td>
         <td>
           <div class="btn-group" role="group">
             <button
@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import CateringItem from '@/catering/store/model';
+import CateringItemAdapter from "../store/adapters/CateringItemAdapter";
 
 export default {
   name: 'ViewItem',
@@ -42,7 +42,7 @@ export default {
     items: {
       type: Array,
       default() {
-        return [new CateringItem()];
+        return [new CateringItemAdapter()];
       },
     },
   },

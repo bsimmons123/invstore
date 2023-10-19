@@ -33,12 +33,14 @@
 </template>
 
 <script>
-import CateringItem from '@/catering/store/model';
+
+
+import CateringItemAdapter from "../store/adapters/CateringItemAdapter";
 
 export default {
   name: 'EditItem',
   props: {
-    item: new CateringItem(),
+    item: new CateringItemAdapter(),
   },
   methods: {
     onSubmitUpdate(evt) {
