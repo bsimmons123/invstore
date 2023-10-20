@@ -6,3 +6,5 @@ build/
 /venv/
 .env
 myenv
+/mysql-data
+/init
