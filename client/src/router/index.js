@@ -25,7 +25,7 @@ autoLoadedFiles.keys().forEach((fileName) => {
 routes.push({ path: '*', redirect: '/' });
 
 const router = new VueRouter({
-  base: `${process.env.BASE_URL}`,
+  base: process.env.BASE_URL,
   mode: 'history',
   routes,
 });
@@ -37,7 +37,9 @@ router.beforeEach((to, from, next) => {
       next('/login'); // Redirect to login page if not authenticated
     }
   } else {
-    next(); // Proceed to the requested route
+    if (from.name !== to.name) {
+      next(); // Proceed to the requested route
+    }
   }
 });
 

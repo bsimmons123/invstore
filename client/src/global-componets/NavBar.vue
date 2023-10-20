@@ -18,7 +18,8 @@
       </b-collapse>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item @click="logout">Logout</b-nav-item>
+        <b-nav-item @click="performLogout" v-if="loggedIn">Logout</b-nav-item>
+        <b-nav-item @click="toLogin" v-else>Login</b-nav-item>
       </b-navbar-nav>
     </b-navbar>
   </div>
@@ -26,9 +27,10 @@
 
 <script>
 import RouterList from '@/global-helpers/routerList';
-import { mapActions } from 'vuex';
+import {mapActions, mapState} from 'vuex';
 import StoreIndex from '../login/store/_StoreIndex';
 import { StoreActions } from '../login/store/actions';
+import {StoreState} from "../login/store/state";
 
 export default {
   name: 'NavBar',
@@ -37,15 +39,28 @@ export default {
       routes: RouterList.routes,
     };
   },
+  computed: {
+    ...mapState(StoreIndex.storeName, {
+      loggedIn: StoreState.isLoggedIn
+    })
+  },
   methods: {
     ...mapActions(StoreIndex.storeName, {
       logout: StoreActions.logout,
     }),
+    performLogout() {
+      this.logout()
+    },
     navigateToRoute(routeName) {
       if (this.$router.currentRoute.name !== routeName) {
         this.$router.push({ name: routeName });
       }
     },
+    toLogin() {
+      if (this.$router.currentRoute.name !== RouterList.routes.login.value) {
+        this.$router.push({ name: RouterList.routes.login.value })
+      }
+    }
   },
 };
 </script>

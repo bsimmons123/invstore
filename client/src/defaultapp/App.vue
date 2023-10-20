@@ -1,23 +1,20 @@
 <template>
   <div>
     <NavBar></NavBar>
-    <div id="app">
-      <water-filling-animation
-        v-show="loading"
-      />
-      <template v-if="!loading">
-        <router-view/>
-      </template>
-    </div>
+    <water-filling-animation
+      v-show="loading"
+    />
+    <template v-if="!loading">
+      <router-view/>
+    </template>
   </div>
 </template>
 
 <script>
 import NavBar from '@/global-componets/NavBar.vue';
-import {mapActions, mapState} from 'vuex';
+import { mapState } from 'vuex';
 import StoreIndex from '../login/store/_StoreIndex';
-import { StoreState } from '../login/store/state';
-import { StoreActions } from '../login/store/actions';
+import { StoreState } from '@/login/store/state';
 import LoginPage from '../login/components/Login.vue';
 import WaterFillingAnimation from './components/WaterFillingAnimation.vue';
 
@@ -55,7 +52,4 @@ export default {
 </script>
 
 <style>
-#app {
-  margin-top: 60px
-}
 </style>
