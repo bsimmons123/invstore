@@ -9,9 +9,7 @@ Flask-Login==0.6.2
 Flask-Login-Multi==0.1.2
 Flask-SQLAlchemy==2.5.1
 importlib-metadata==4.12.0
-mysql==0.0.3
-mysql-connector==2.2.9
-mysql-connector-python==8.0.30
-mysqlclient==2.2.0
-PyMySQL==1.0.2
+# mysql==0.0.3
+# mysql-connector==2.2.9
+mysql-connector-python==8.1.0
 SQLAlchemy==1.4.40

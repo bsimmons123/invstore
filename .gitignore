@@ -7,4 +7,4 @@ build/
 .env
 myenv
 /mysql-data
-/init
+/init/

@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, send_from_directory
 from flask_login import LoginManager
 
 from main.db.database import init_db
@@ -30,7 +30,12 @@ def create_app():
     register_routes(app)
     register_exception_handler(app)
 
-    # This route will serve your Vue app for any routes that aren't API routes.
+    @app.route('/site.webmanifest')
+    def manifest():
+        return send_from_directory('dist', 'site.webmanifest')
+
+    # Catch all route
+    @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>', methods=['GET'])
     def catch_all(path):
         return render_template('index.html')
