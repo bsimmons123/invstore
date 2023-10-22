@@ -1,7 +1,6 @@
 <template>
   <div class="modern-list">
     <b-button variant="primary" class="mb-2" v-b-modal.add-list-modal>Create List</b-button>
-    <h2 class="list-title">Modernized List</h2>
     <div class="list-container">
       <div v-for="item in cateringLists" :key="item.id" class="list-item">
         <div class="item-info">

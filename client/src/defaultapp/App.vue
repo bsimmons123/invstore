@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-image">
     <NavBar></NavBar>
     <water-filling-animation
       v-show="loading"
@@ -15,7 +15,6 @@ import NavBar from '@/global-componets/NavBar.vue';
 import { mapState } from 'vuex';
 import StoreIndex from '../login/store/_StoreIndex';
 import { StoreState } from '@/login/store/state';
-import LoginPage from '../login/components/Login.vue';
 import WaterFillingAnimation from './components/WaterFillingAnimation.vue';
 
 export default {
@@ -27,7 +26,6 @@ export default {
   },
   components: {
     NavBar,
-    LoginPage,
     WaterFillingAnimation,
   },
   computed: {
@@ -52,4 +50,5 @@ export default {
 </script>
 
 <style>
+
 </style>

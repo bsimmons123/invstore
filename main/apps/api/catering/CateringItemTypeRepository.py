@@ -13,7 +13,7 @@ def get_item_by_user_id(user_id):
     return CateringItemType.query.filter_by(user_id=user_id).all()
 
 
-def create_item(label, user_id):
+def create_item_type(label, user_id):
     item = CateringItemType(label=label, user_id=user_id)
     db.session.add(item)
     db.session.commit()

@@ -13,7 +13,8 @@ export const StoreMutations = {
   SET_EDIT_ITEM: 'SET_EDIT_ITEM',
   UPDATE_ADD_CATERING_LIST: 'UPDATE_ADD_CATERING_LIST',
   SET_CATERING_LIST: 'SET_CATERING_LIST',
-  UPDATE_ADD_ITEM_FORM: 'UPDATE_ADD_ITEM_FORM'
+  UPDATE_ADD_ITEM_FORM: 'UPDATE_ADD_ITEM_FORM',
+  ADD_ITEM_TYPE: 'ADD_ITEM_TYPE'
 };
 
 export default {
@@ -61,5 +62,8 @@ export default {
   },
   SET_ITEM_TYPES(state, value) {
     state[StoreState.itemTypes] = value;
+  },
+  ADD_ITEM_TYPE(state, payload) {
+    state[StoreState.itemTypes].push(payload);
   }
 };

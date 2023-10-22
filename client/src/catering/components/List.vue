@@ -9,6 +9,7 @@
       @updateCountdown="updateDismissAlert"
     />
     <button type="button" class="btn btn-success btn-sm" v-b-modal.add-modal>Add Item</button>
+    <b-button class="btn btn-secondary btn-sm" v-b-toggle.sidebar-right>Add Type</b-button>
     <br><br>
     <view-item
       :items="getItems"
@@ -25,6 +26,7 @@
       @onEdit="onSubmitUpdate"
       @onEditReset="onResetUpdate"
     />
+    <add-catering-item-type/>
   </div>
 </template>
 
@@ -39,6 +41,7 @@ import { StoreMutations } from '../store/mutations';
 import { StoreState } from '../store/state';
 import { StoreActions } from '../store/actions';
 import CateringItemAdapter from "../store/adapters/CateringItemAdapter";
+import AddCateringItemType from "@/catering/components/AddCateringItemType.vue";
 
 export default {
   name: 'CateringList',
@@ -50,6 +53,7 @@ export default {
   },
   props: ['listId'],
   components: {
+    AddCateringItemType,
     ViewItem,
     AddItem,
     EditItem,
@@ -124,7 +128,6 @@ export default {
     },
   },
   created() {
-    console.log("getting items")
     this.getItemsFromList(this.listId)
     document.title = 'Catering';
   }

@@ -9,7 +9,8 @@ export const StoreActions = {
   editItem: 'editItem',
   deleteItem: 'deleteItem',
   addNewCateringList: 'addNewCateringList',
-  getCateringLists: 'getCateringLists'
+  getCateringLists: 'getCateringLists',
+  addNewItemType: 'addNewItemType'
 };
 
 export default {
@@ -90,5 +91,15 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-  }
+  },
+  addNewItemType(state, type) {
+    axios.post(`${Helpers.paths.getItemTypes()}`, type)
+      .then((res) => {
+        state.commit(StoreMutations.ADD_ITEM_TYPE, res.data.obj);
+      })
+      .catch((error) => {
+        // eslint-disable-next-line
+        console.log(error);
+      });
+  },
 };

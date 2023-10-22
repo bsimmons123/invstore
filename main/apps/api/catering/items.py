@@ -4,7 +4,7 @@ from flask_restx import Resource, fields
 
 from main.apps.api.catering import catering_api as api
 from main.apps.api.catering.CateringItemRepository import create_item
-from main.apps.api.catering.CateringItemTypeRepository import get_item_by_user_id
+from main.apps.api.catering.CateringItemTypeRepository import get_item_by_user_id, create_item_type
 from main.apps.api.catering.CateringListRepository import get_list_by_id
 
 
@@ -30,7 +30,8 @@ class ItemList(Resource):
         types = get_item_by_user_id(user_id=user_id)
 
         # Convert items to a format suitable for response
-        items_response = [{'id': item.id, 'label': item.label, 'type': serialize_type(item.type), 'list_id': list_id} for item in items]
+        items_response = [{'id': item.id, 'label': item.label, 'type': serialize_type(item.type), 'list_id': list_id}
+                          for item in items]
         types_response = [{'id': itemType.id, 'label': itemType.label} for itemType in types]
 
         return {'items': items_response, 'types': types_response}
@@ -83,6 +84,50 @@ class MutateItem(Resource):
         if item_removed:
             return {'message': 'Item removed!'}
         return {'message': 'Item NOT removed!'}
+
+
+@api.route('/item_types', methods=['GET', 'POST'])
+class ItemTypes(Resource):
+
+    @api.doc('Get All Catering Item Types')
+    @api.expect(api.parser().add_argument('listId', type=int, required=True, help='Name of the item'))
+    @login_required
+    def get(self):
+        user_id = current_user.id
+        list_id = request.args.get("listId")
+        # Assuming CateringItem is the model for your items
+        catering_list = get_list_by_id(id=list_id)
+        items = catering_list.catering_items
+        types = get_item_by_user_id(user_id=user_id)
+
+        # Convert items to a format suitable for response
+        items_response = [{'id': item.id, 'label': item.label, 'type': serialize_type(item.type), 'list_id': list_id}
+                          for item in items]
+        types_response = [{'id': itemType.id, 'label': itemType.label} for itemType in types]
+
+        return {'items': items_response, 'types': types_response}
+
+    type_obj = api.model('Item_Type', {
+        'label': fields.String(required=True, description='Item Name'),
+    })
+
+    @api.doc('Create Catering Item Type')
+    @api.expect(type_obj)
+    @login_required
+    def post(self):
+        user_id = current_user.id
+        data = api.payload
+        label = data['label']
+
+        new_type = create_item_type(label=label, user_id=user_id)
+
+        return {
+            'message': 'Item added!',
+            'obj': {
+                'id': new_type.id,
+                'label': new_type.label,
+            }
+        }
 
 
 def remove_item(item_id):

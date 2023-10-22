@@ -9,11 +9,36 @@ export const StoreActions = {
   login: 'login',
   check_login: 'check_login',
   logout: 'logout',
+  register: 'register'
 };
 
 export default {
   login({ commit }, loginParams) {
     axios.post(Helpers.paths.checkLogin(), loginParams)
+      .then((res) => {
+        localStorage.setItem('logged_in', true);
+        commit(StoreMutations.SET_LOGGED_IN, true);
+        commit(StoreMutations.SET_MESSAGE, res.data.message);
+        commit(StoreMutations.TOGGLE_SHOW_MESSAGE, true);
+        commit(StoreMutations.SET_ALERT_COUNTDOWN, 5);
+        commit(StoreMutations.SET_MESSAGE_TYPE, MessageTypes.success);
+        router.push({ name: RouterList.routes.homeList.value })
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          // Unauthorized error
+          commit(StoreMutations.SET_MESSAGE, 'Invalid credentials. Please try again.');
+          commit(StoreMutations.TOGGLE_SHOW_MESSAGE, true);
+          commit(StoreMutations.SET_ALERT_COUNTDOWN, 5);
+          commit(StoreMutations.SET_MESSAGE_TYPE, MessageTypes.warning);
+        } else {
+          // Other errors
+          console.error(error);
+        }
+      });
+  },
+  register({ commit }, loginParams) {
+    axios.post(Helpers.paths.register(), loginParams)
       .then((res) => {
         localStorage.setItem('logged_in', true);
         commit(StoreMutations.SET_LOGGED_IN, true);

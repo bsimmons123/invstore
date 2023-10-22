@@ -23,7 +23,6 @@
         disabled-field="notEnabled"
         @change="customChangeHandler"
       />
-      <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>
       <b-button type="submit" variant="primary">Submit</b-button>
       <b-button type="reset" variant="danger">Reset</b-button>
     </b-form>
@@ -39,11 +38,6 @@ import {StoreActions} from "../store/actions";
 
 export default {
   name: 'AddItem',
-  data() {
-    return {
-      selected: 'A',
-    }
-  },
   props: {
     listId: {
       default: 0,

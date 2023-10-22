@@ -55,7 +55,8 @@ class Register(Resource):
             return {'message': 'Username or email already exists'}, 400
 
         # Add the new user to the database
-        create_user(name=username, password=password, email=email)
+        user = create_user(name=username, password=password, email=email)
+        login_user(user)
 
         return {'message': 'User created successfully'}, 201
 

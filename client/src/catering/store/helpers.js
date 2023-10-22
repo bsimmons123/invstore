@@ -2,6 +2,7 @@ export default class Helpers {
   static paths = {
     root: '/api',
     items: '/catering/v1/catering/items',
+    types: '/catering/v1/catering/item_types',
     cateringList: '/catering/v1/catering/catering_list',
     getItems() {
       return this.root + this.items;
@@ -11,6 +12,9 @@ export default class Helpers {
     },
     getCateringList() {
       return this.root + this.cateringList;
+    },
+    getItemTypes() {
+      return this.root + this.types;
     }
   };
 

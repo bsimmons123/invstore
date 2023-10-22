@@ -14,7 +14,7 @@ def get_user_by_id(item_id):
 
 def create_user(name, password, email):
     # Generate a hashed version of the password
-    hashed_password = generate_password_hash(password, method='sha256')
+    hashed_password = generate_password_hash(password, method='scrypt')
 
     # Create a new user with the hashed password
     user = User(name=name, password=hashed_password, email=email)
@@ -22,6 +22,8 @@ def create_user(name, password, email):
     # Add the user to the session and commit
     db.session.add(user)
     db.session.commit()
+
+    user = User.query.filter_by(email=email).first()
 
     return user
 

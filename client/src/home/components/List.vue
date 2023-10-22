@@ -227,6 +227,7 @@ import Parallax from "../../components/Parallax.vue";
 import {FormGroupInput, Button} from "../../components";
 import NButton from "../../components/Button.vue";
 import FgInput from "../../components/Inputs/formGroupInput.vue";
+
 export default {
   name: 'landing',
   bodyClass: 'landing-page',
@@ -246,9 +247,6 @@ export default {
       }
     };
   },
-  created() {
-    console.log("created")
-  }
 };
 </script>
 
