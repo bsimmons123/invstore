@@ -8,16 +8,13 @@ def get_all_users():
     return User.query.all()
 
 
-def get_user_by_id(item_id):
-    return User.query.get(item_id)
+def get_user_by_id(user_id):
+    return User.query.get(user_id)
 
 
-def create_user(name, password, email):
-    # Generate a hashed version of the password
-    hashed_password = generate_password_hash(password, method='scrypt')
-
-    # Create a new user with the hashed password
-    user = User(name=name, password=hashed_password, email=email)
+def create_user(id, name, email):
+    # Create a new user
+    user = User(id=id, name=name, email=email)
 
     # Add the user to the session and commit
     db.session.add(user)

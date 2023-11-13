@@ -20,6 +20,24 @@ module.exports = {
         ws: false,
         webSocketTimeout: 60000,
       },
+      '/login': {
+        target: 'http://127.0.0.1:5000/',
+        changeOrigin: true,
+        ws: false,
+        webSocketTimeout: 60000,
+      },
+      '/callback': {
+        target: 'http://127.0.0.1:5000/',
+        changeOrigin: true,
+        ws: false,
+        webSocketTimeout: 60000,
+      },
+      '/logout': {
+        target: 'http://127.0.0.1:5000/',
+        changeOrigin: true,
+        ws: false,
+        webSocketTimeout: 60000,
+      },
     },
   },
 };

@@ -16,7 +16,7 @@ class CateringList(db.Model):
     __tablename__ = 'catering_list'
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(500))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.String(500), db.ForeignKey('user.id'))
 
     # Define a relationships
     user = db.relationship('User', backref='user')
@@ -27,7 +27,7 @@ class CateringItemType(db.Model):
     __tablename__ = 'catering_item_type'
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(500))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.String(500), db.ForeignKey('user.id'))
 
     # Define a relationship to the User model
     user = db.relationship('User', backref='catering_item_type')

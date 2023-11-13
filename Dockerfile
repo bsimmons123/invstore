@@ -19,6 +19,7 @@ COPY --from=build-vue /dist ./dist
 COPY requirements.txt .
 COPY app.py .
 COPY application.py .
+COPY .env .
 COPY main/ ./main
 
 #CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
