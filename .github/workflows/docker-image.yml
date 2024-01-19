@@ -54,3 +54,18 @@ jobs:
           docker build -t $REPO:${GITHUB_SHA::8} .
       - name: Publish Docker image
         run: docker push $REPO --all-tags
+
+  remote-deploy:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master'
+    steps:
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          name: id_rsa # optional
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+          # config: ${{ secrets.CONFIG }} # ssh_config; optional
+          if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
+      - name: rsync over SSH
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} ""cd ../invstore && ./redeploy.sh""
