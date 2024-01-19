@@ -1,6 +1,6 @@
 # Catering
 [![CI Build](https://github.com/bsimmons123/invstore/actions/workflows/docker-image.yml/badge.svg)](https://github.com/bsimmons123/invstore/actions/workflows/docker-image.yml)
-- View the demo [here](https://flask.sneakystuff.net)
+- View the demo [here](https://invstore.brandon-simmons.work)
 
 #### Building with Docker:
 ```
