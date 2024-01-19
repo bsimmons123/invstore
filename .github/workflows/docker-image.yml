@@ -69,4 +69,4 @@ jobs:
           # config: ${{ secrets.CONFIG }} # ssh_config; optional
           if_key_exists: fail # replace / ignore / fail; optional (defaults to fail)
       - name: rsync over SSH
-        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_ADDRESS }} ""cd ../invstore && ./redeploy.sh""
+        run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_ADDRESS }} "cd ../invstore && ./redeploy.sh"
