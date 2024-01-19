@@ -34,6 +34,12 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_USER }}
           -p '${{ secrets.DOCKER_PASS }}'
+      - name: 'Create env file'
+        run: |
+          touch .env
+          echo DATABASE_URL="<db-String>" >> .env
+          echo SECRET_KEY=secret_key >> .env
+          cat .env
       - name: Build Prod Docker image
         if: github.ref == 'refs/heads/main'
         run: |
