@@ -23,17 +23,17 @@ services:
   invstore:
     build:
       context: .
-      dockerfile: Dockerfile  # Specify your Dockerfile here
+      dockerfile: Dockerfile
     image: bsimmons12/invstore
     depends_on:
       mysql:
         condition: service_healthy
     ports:
-      - "5000:5000"  # Adjust port as needed
+      - "5000:5000"
     environment:
-      - PORT=5000  # Set the port for NGINX to use
-      - DATABASE_URL=mysql+mysqlconnector://root:password@mysql-db-flask:3306/invstore  # Use the assigned value
-      - SECRET_KEY=unique_key  # Use the assigned value
+      - PORT=5000
+      - DATABASE_URL=mysql+mysqlconnector://root:password@mysql-db-flask:3306/invstore
+      - SECRET_KEY=unique_key
     networks:
       - web-network
 networks:
