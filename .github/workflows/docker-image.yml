@@ -41,16 +41,16 @@ jobs:
           echo SECRET_KEY=secret_key >> .env
           cat .env
       - name: Build Prod Docker image
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/master'
         run: |
           echo "REPO - $REPO"
           echo "GITHUB_SHA (first 8 characters) - ${GITHUB_SHA::8}"
           docker build -t $REPO:latest -t $REPO:${GITHUB_SHA::8} .
       - name: Build Docker Image
-        if: github.ref != 'refs/heads/main'
+        if: github.ref != 'refs/heads/master'
         run: |
           echo "REPO - $REPO"
           echo "GITHUB_SHA (first 8 characters) - ${GITHUB_SHA::8}"
           docker build -t $REPO:${GITHUB_SHA::8} .
       - name: Publish Docker image
-        run: docker push $REPO
+        run: docker push $REPO --all-tags
