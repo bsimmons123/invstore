@@ -9,7 +9,7 @@ def main():
     app.run()
 
     # enable CORS
-    CORS(app, resources={r'/*': {'origins': ''}})
+    CORS(app, resources={r'/*': {'origins': '*'}})
 
 
 if __name__ == '__main__':
