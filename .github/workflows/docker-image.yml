@@ -11,5 +11,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: 'Create env file'
+      run: |
+        touch .env
+        echo DATABASE_URL="<db-String>" >> .env
+        echo SECRET_KEY=secret_key >> .env
+        cat .env
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
