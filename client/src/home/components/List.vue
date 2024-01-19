@@ -74,7 +74,7 @@ export default {
         "\n" +
         "## Feedback and Contributions\n" +
         "\n" +
-        "We welcome your feedback! If you encounter any issues or have suggestions for improvements, please [open an issue](https://github.com/yourusername/invstore/issues).\n" +
+        "We welcome your feedback! If you encounter any issues or have suggestions for improvements, please [open an issue](https://github.com/bsimmons123/invstore/issues).\n" +
         "\n" +
         "Feel free to contribute to the project by submitting pull requests.\n" +
         "\n" +
