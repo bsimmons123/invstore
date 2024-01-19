@@ -1,5 +1,5 @@
 # Catering
-[![pipeline status](https://gitlab.com/sneakysquid05/invstore/badges/master/pipeline.svg)](https://gitlab.com/sneakysquid05/invstore/-/commits/master)
+[![CI Build](https://github.com/bsimmons123/invstore/actions/workflows/docker-image.yml/badge.svg)](https://github.com/bsimmons123/invstore/actions/workflows/docker-image.yml)
 - View the demo [here](https://flask.sneakystuff.net)
 
 #### Building with Docker:
