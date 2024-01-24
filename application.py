@@ -21,8 +21,7 @@ if ENV_FILE:
 else:
     print("No .env file found.")
 
-app = Flask(__name__, static_folder='./dist/static',
-            template_folder='./dist')
+app = Flask(__name__, static_folder='./dist', static_url_path='')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = env.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -108,6 +107,6 @@ def create_app():
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>', methods=['GET'])
     def catch_all(path):
-        return render_template('index.html')
+        return send_from_directory(app.static_folder, 'index.html')
 
     return app
