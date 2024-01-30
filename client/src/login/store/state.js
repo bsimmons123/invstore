@@ -1,5 +1,4 @@
 import MessageTypes from '../../global-helpers/MessageTypes';
-import * as LocalStorage from "vue";
 
 export const StoreState = {
   isLoggedIn: 'isLoggedIn',
@@ -10,7 +9,7 @@ export const StoreState = {
 };
 
 export default {
-  isLoggedIn: JSON.parse(localStorage.getItem('user')) || false,
+  isLoggedIn: false,
   message: '',
   showMessage: false,
   messageType: MessageTypes,

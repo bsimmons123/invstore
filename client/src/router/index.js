@@ -1,9 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import stores from "../defaultapp/stores";
-import StoreIndex from "../defaultapp/store/_StoreIndex";
-import { StoreMutations } from "../defaultapp/store/mutations";
-import MessageTypes from "../global-helpers/MessageTypes";
 
 Vue.use(VueRouter);
 
@@ -35,13 +31,11 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  let isLoggedIn = localStorage.getItem('user');
+  let isLoggedIn = localStorage.getItem('logged_in');
   if (to.meta.requiresAuth && isLoggedIn === null) {
-    if (from.path !== '/') {
-      next('/'); // Redirect to home page if not authenticated
+    if (from.path !== '/login') {
+      next('/login'); // Redirect to login page if not authenticated
     }
-    stores.commit(`${StoreIndex.storeName}/${StoreMutations.SET_MESSAGE}`, "You need to login to access this resource")
-    stores.commit(`${StoreIndex.storeName}/${StoreMutations.SET_MESSAGE_TYPE}`, MessageTypes.danger)
   } else {
     if (from.name !== to.name) {
       next(); // Proceed to the requested route

@@ -30,9 +30,10 @@
 <script>
 import RouterList from '@/global-helpers/routerList';
 import {mapActions, mapMutations, mapState} from 'vuex';
-import StoreIndex from '@/defaultapp/store/_StoreIndex';
-import {StoreState} from "@/defaultapp/store/state";
-import {StoreMutations} from "@/defaultapp/store/mutations";
+import StoreIndex from '@/login/store/_StoreIndex';
+import { StoreActions } from '@/login/store/actions';
+import {StoreState} from "@/login/store/state";
+import {StoreMutations} from "@/login/store/mutations";
 
 export default {
   name: 'NavBar',
@@ -47,11 +48,14 @@ export default {
     })
   },
   methods: {
+    ...mapActions(StoreIndex.storeName, {
+      logout: StoreActions.logout,
+    }),
     ...mapMutations(StoreIndex.storeName, {
       setLoggedIn: StoreMutations.SET_LOGGED_IN
     }),
     performLogout() {
-      window.location.href = "/logout"
+      this.logout()
     },
     navigateToRoute(routeName) {
       if (this.$router.currentRoute.name !== routeName) {
@@ -59,7 +63,9 @@ export default {
       }
     },
     toLogin() {
-      window.location.href = "/login"
+      if (this.$router.currentRoute.name !== RouterList.routes.login.value) {
+        this.$router.push({ name: RouterList.routes.login.value })
+      }
     }
   },
   created() {

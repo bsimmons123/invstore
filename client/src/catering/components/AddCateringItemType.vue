@@ -18,7 +18,7 @@
         </form>
       </div>
       <b-list-group>
-        <b-list-group-item v-for="type in types" key>{{ type.label }}</b-list-group-item>
+        <b-list-group-item v-for="type in types">{{ type.label }}</b-list-group-item>
       </b-list-group>
     </b-sidebar>
   </div>
