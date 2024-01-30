@@ -1,12 +1,17 @@
 import os
 
+from os import environ as env
 from flask import Flask, render_template, send_from_directory
 from flask_login import LoginManager
+from dotenv import load_dotenv, find_dotenv
+import logging
 
 from main.db.database import init_db
 from main.db.models.User import User
 from main.extensions.routes_extension import register_routes
 from main.extensions.exception_extension import register_exception_handler
+
+logging.basicConfig(level=logging.INFO)
 
 # instantiate the app
 ENV_FILE = find_dotenv()
@@ -16,13 +21,13 @@ if ENV_FILE:
 else:
     print("No .env file found.")
 
-app = Flask(__name__, static_folder='./dist/static',
-            template_folder='./dist')
+app = Flask(__name__, static_folder='./dist', static_url_path='')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = env.get("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = env.get("APP_SECRET_KEY")
+app.secret_key = env.get("SECRET_KEY")
 
+app.logger.info(env.get("SECRET_KEY"))
 
 def create_app():
     login_manager = LoginManager(app)

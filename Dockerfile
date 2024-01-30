@@ -18,6 +18,7 @@ RUN pip3 install -r requirements.txt
 COPY --from=build-vue /dist ./dist
 COPY requirements.txt .
 COPY app.py .
+COPY .env .
 COPY application.py .
 COPY main/ ./main
 

@@ -1,3 +1,4 @@
+from datetime import datetime
 from werkzeug.security import check_password_hash
 
 from main.db.database import db
@@ -9,6 +10,10 @@ class User(db.Model):
     name = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(2000), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
+    last_logged_in = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    is_active = db.Column(db.Boolean, default=True)
 
     @property
     def is_active(self):
@@ -25,3 +30,12 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+class UserList(db.Model):
+    __tablename__ = 'user_list'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    list_id = db.Column(db.Integer, db.ForeignKey('c_list.id'), nullable=False)
+    role = db.Column(db.String(50))  # Example role field
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
