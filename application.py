@@ -29,6 +29,7 @@ app.secret_key = env.get("SECRET_KEY")
 
 app.logger.info(env.get("SECRET_KEY"))
 
+
 def create_app():
     login_manager = LoginManager(app)
     login_manager.login_view = 'user_api.user_login'
