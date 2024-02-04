@@ -34,8 +34,13 @@
             @dismiss="dismissAlert"
             @updateCountdown="updateDismissAlert"
           />
-          <button type="submit" class="btn btn-primary">Login</button>
-          <button type="button" class="btn btn-secondary" @click="navigateToRegister" style="margin-left: 10px;">Create Account</button>
+          <template v-if="!loggedIn">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="button" class="btn btn-secondary" @click="navigateToRegister" style="margin-left: 10px;">Create Account</button>
+          </template>
+          <template v-else>
+            <b-badge variant="danger">You're already logged in!</b-badge>
+          </template>
         </form>
       </div>
     </div>
@@ -51,9 +56,10 @@ import AlertComponent from '../../global-componets/Alert.vue';
 import { StoreState } from '../store/state';
 import { StoreMutations } from '../store/mutations';
 import RouterList from "../../global-helpers/routerList";
+import Alert from "@/components/Alert.vue";
 
 export default {
-  components: { AlertComponent },
+  components: {Alert, AlertComponent },
   data() {
     return {
       loginParams: new UserLoginAdapter(),
@@ -65,6 +71,7 @@ export default {
       getMessage: StoreState.message,
       getMessageType: StoreState.messageType,
       getAlertCountdown: StoreState.alertDismissCountdown,
+      loggedIn: StoreState.isLoggedIn
     }),
   },
   methods: {

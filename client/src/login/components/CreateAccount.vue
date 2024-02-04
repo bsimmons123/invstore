@@ -37,7 +37,12 @@
               required
             />
           </div>
-          <button type="submit" class="btn btn-primary">Create Account</button>
+          <template v-if="!loggedIn">
+            <button type="submit" class="btn btn-primary">Create Account</button>
+          </template>
+          <template v-else>
+            <b-badge variant="danger">You're already logged in!</b-badge>
+          </template>
         </form>
       </div>
     </div>
@@ -64,6 +69,7 @@ export default {
       getMessage: StoreState.message,
       getMessageType: StoreState.messageType,
       getAlertCountdown: StoreState.alertDismissCountdown,
+      loggedIn: StoreState.isLoggedIn
     }),
   },
   methods: {

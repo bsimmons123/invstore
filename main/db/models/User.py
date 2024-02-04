@@ -1,4 +1,7 @@
 from datetime import datetime
+
+from flask_login import current_user
+from pytz import timezone, utc
 from werkzeug.security import check_password_hash
 
 from main.db.database import db
@@ -14,22 +17,36 @@ class User(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_active = db.Column(db.Boolean, default=True)
-
-    @property
-    def is_active(self):
-        return True
+    timezone = db.Column(db.String(50), default='UTC')
 
     def get_id(self):
         return str(self.id)
 
+    @property
     def is_authenticated(self):
-        return True  # Implement your logic here
-
-    def is_anonymous(self):
-        return False
+        return True if current_user.get_id() is not None else False
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    # Convert timezones from UTC to local time zone for users
+    @property
+    def local_last_logged_in(self):
+        return self.utc_to_local(self.last_logged_in)
+
+    @property
+    def local_created_at(self):
+        return self.utc_to_local(self.created_at)
+
+    @property
+    def local_updated_at(self):
+        return self.utc_to_local(self.updated_at)
+
+    def utc_to_local(self, utc_dt):
+        local_tz = timezone(self.timezone)
+        local_dt = utc_dt.replace(tzinfo=utc).astimezone(local_tz)
+        return local_tz.normalize(local_dt)  # .normalize might be necessary as not all days have the same duration (due to DST transitions, for example)
+
 
 class UserList(db.Model):
     __tablename__ = 'user_list'
