@@ -1,9 +1,7 @@
-from datetime import datetime
-
-from flask import request, session, redirect
+from flask import request
+from flask_login import login_required, current_user
 from flask_restx import Resource, fields
 
-from main.apps.api import check_user_login
 from main.apps.api.catering import catering_api as api
 from main.apps.api.catering.CateringItemRepository import create_item
 from main.apps.api.catering.CateringItemTypeRepository import get_item_by_user_id, create_item_type
@@ -22,29 +20,24 @@ class ItemList(Resource):
 
     @api.doc('Get All Catering Items')
     @api.expect(api.parser().add_argument('listId', type=int, required=True, help='Name of the item'))
+    @login_required
     def get(self):
-        response = check_user_login()
-        if response:
-            return response
-        user_id = session["userinfo"]["sub"]
+        user_id = current_user.id
         list_id = request.args.get("listId")
         # Assuming CateringItem is the model for your items
         catering_list = get_list_by_id(id=list_id)
-        if catering_list is None:
-            return {'message': 'Catering list not found'}, 404
-        else:
-            items = catering_list.catering_items
-            types = get_item_by_user_id(user_id=user_id)
+        items = catering_list.catering_items
+        types = get_item_by_user_id(user_id=user_id)
 
-            # Convert items to a format suitable for response
-            items_response = [{'id': item.id, 'label': item.label, 'type': serialize_type(item.type), 'list_id': list_id}
-                              for item in items]
-            types_response = [{'id': itemType.id, 'label': itemType.label} for itemType in types]
+        # Convert items to a format suitable for response
+        items_response = [{'id': item.id, 'label': item.label, 'type': serialize_type(item.type), 'list_id': list_id}
+                          for item in items]
+        types_response = [{'id': itemType.id, 'label': itemType.label} for itemType in types]
 
-            return {'items': items_response, 'types': types_response}
+        return {'items': items_response, 'types': types_response}
 
     item_obj = api.model('Item', {
-        'label': fields.String(required=True, description='Item Name'),
+        'name': fields.String(required=True, description='Item Name'),
         'type_id': fields.String(required=True, description='Item Type Id'),
         'list_id': fields.String(required=True, description='Item Type Id'),
     })
@@ -98,26 +91,21 @@ class ItemTypes(Resource):
 
     @api.doc('Get All Catering Item Types')
     @api.expect(api.parser().add_argument('listId', type=int, required=True, help='Name of the item'))
+    @login_required
     def get(self):
-        if "user" not in session or not is_token_valid(session["user"]):
-            # Redirect to login or perform other actions for an expired session
-            return redirect("/login")
-        user_id = session["userinfo"]["sub"]
+        user_id = current_user.id
         list_id = request.args.get("listId")
         # Assuming CateringItem is the model for your items
         catering_list = get_list_by_id(id=list_id)
-        if catering_list is None:
-            return {'message': 'Catering list not found'}, 404
-        else:
-            items = catering_list.catering_items
-            types = get_item_by_user_id(user_id=user_id)
+        items = catering_list.catering_items
+        types = get_item_by_user_id(user_id=user_id)
 
-            # Convert items to a format suitable for response
-            items_response = [{'id': item.id, 'label': item.label, 'type': serialize_type(item.type), 'list_id': list_id}
-                              for item in items]
-            types_response = [{'id': itemType.id, 'label': itemType.label} for itemType in types]
+        # Convert items to a format suitable for response
+        items_response = [{'id': item.id, 'label': item.label, 'type': serialize_type(item.type), 'list_id': list_id}
+                          for item in items]
+        types_response = [{'id': itemType.id, 'label': itemType.label} for itemType in types]
 
-            return {'items': items_response, 'types': types_response}
+        return {'items': items_response, 'types': types_response}
 
     type_obj = api.model('Item_Type', {
         'label': fields.String(required=True, description='Item Name'),
@@ -125,11 +113,9 @@ class ItemTypes(Resource):
 
     @api.doc('Create Catering Item Type')
     @api.expect(type_obj)
+    @login_required
     def post(self):
-        if "user" not in session or not is_token_valid(session["user"]):
-            # Redirect to login or perform other actions for an expired session
-            return redirect("/login")
-        user_id = session["userinfo"]["sub"]
+        user_id = current_user.id
         data = api.payload
         label = data['label']
 
@@ -158,12 +144,4 @@ def edit_item(item_id, updated_item):
     #         item['name'] = updated_item['name']
     #         item['type'] = updated_item['type']
     #         return True
-    return False
-
-
-def is_token_valid(token):
-    # Check if the token has an expiration time
-    if "expires_at" in token:
-        expires_at = datetime.fromtimestamp(token["expires_at"])
-        return expires_at > datetime.now()
     return False

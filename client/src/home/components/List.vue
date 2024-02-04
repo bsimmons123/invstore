@@ -3,15 +3,16 @@
     <div style="margin-left: 10%; margin-right:5%; margin-top: 4%;" v-html="markdownToHtml"></div>
   </div>
 </template>
+
 <script>
 import Parallax from "../../components/Parallax.vue";
 import {FormGroupInput, Button} from "../../components";
 import NButton from "../../components/Button.vue";
 import FgInput from "../../components/Inputs/formGroupInput.vue";
 import {mapActions, mapState} from "vuex";
-import {StoreState} from "../../defaultapp/store/state";
-import StoreIndex from "../../defaultapp/store/_StoreIndex";
-import {StoreActions} from "../../defaultapp/store/actions";
+import {StoreState} from "../../login/store/state";
+import StoreIndex from "../../login/store/_StoreIndex";
+import {StoreActions} from "../../login/store/actions";
 import { marked } from 'marked'
 
 export default {
@@ -74,13 +75,13 @@ export default {
         "\n" +
         "## Feedback and Contributions\n" +
         "\n" +
-        "We welcome your feedback! If you encounter any issues or have suggestions for improvements, please [open an issue](https://github.com/bsimmons123/invstore/issues).\n" +
+        "We welcome your feedback! If you encounter any issues or have suggestions for improvements, please [open an issue](https://github.com/yourusername/invstore/issues).\n" +
         "\n" +
         "Feel free to contribute to the project by submitting pull requests.\n" +
         "\n" +
         "Happy event planning with InvStore! 🥳\n"
     };
-  },
+  },  
   methods: {
     ...mapActions(StoreIndex.storeName, {
       checkLogin: StoreActions.check_login
@@ -94,7 +95,7 @@ export default {
 
 <style>
 .parallax-style {
-  background-image: url('@/assets/img/home.jpg');
+  background-image: url('@/assets/img/bg6.jpg');
 }
 .login-style {
   background-image: url('@/assets/img/login.jpg');

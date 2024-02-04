@@ -14,5 +14,4 @@ gunicorn==21.2.0
 # mysql-connector==2.2.9
 mysql-connector-python==8.1.0
 SQLAlchemy==1.4.40
-authlib>=1.0
-requests>=2.27.1
+requests~=2.31.0
