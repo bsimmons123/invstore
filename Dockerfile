@@ -2,9 +2,9 @@
 FROM node:15.7.0-alpine3.10 as build-vue
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
-COPY ./client/package*.json ./
+COPY ./client-v2/package*.json ./
 RUN npm install
-COPY ./client .
+COPY ./client-v2 .
 RUN npm run build
 
 # production

@@ -88,4 +88,4 @@ class Logout(Resource):
     def get(self):
         # Remove data from session
         logout_user()
-        return redirect('/#/login')
+        return redirect('/#/signin')

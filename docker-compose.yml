@@ -7,11 +7,10 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: priv_web_db
+      MYSQL_DATABASE: invstore
       MYSQL_USER: your_mysql_user
       MYSQL_PASSWORD: your_mysql_password
     volumes:
-      - ./init:/docker-entrypoint-initdb.d
       - ./mysql-data:/var/lib/mysql
     networks:
       - web-network
