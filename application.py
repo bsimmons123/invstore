@@ -1,7 +1,7 @@
 import os
 
 from os import environ as env
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, send_from_directory
 from flask_login import LoginManager
 from dotenv import load_dotenv, find_dotenv
 import logging
@@ -31,12 +31,14 @@ app.logger.info(env.get("SECRET_KEY"))
 
 
 def create_app():
-    login_manager = LoginManager(app)
+    login_manager = LoginManager()
+    login_manager.init_app(app)
     login_manager.login_view = 'user_api.user_login'
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
+
 
     init_db(app)
 

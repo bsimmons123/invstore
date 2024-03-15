@@ -7,11 +7,13 @@ pip~=23.2.1
 Flask-Admin==1.6.0
 Flask-Login==0.6.2
 Flask-Login-Multi==0.1.2
-Flask-SQLAlchemy==2.5.1
+Flask-SQLAlchemy==3.1.1
 importlib-metadata==4.12.0
 gunicorn==21.2.0
 # mysql==0.0.3
 # mysql-connector==2.2.9
 mysql-connector-python==8.1.0
-SQLAlchemy==1.4.40
+# SQLAlchemy==2.0.28
 requests~=2.31.0
+pytz~=2023.3.post1
+pytest~=8.1.1
