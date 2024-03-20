@@ -53,6 +53,8 @@ class CateringItemType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(500))
     list_id = db.Column(db.Integer, db.ForeignKey('c_list.id'))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
     # Define a relationship to the CateringList model
     list = db.relationship('CateringList', backref='catering_item_type')

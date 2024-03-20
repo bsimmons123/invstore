@@ -74,7 +74,7 @@ class Register(Resource):
 
         timezone = get_timezone(request.remote_addr)
 
-        user = create_user(name=username, password=password, email=email, timezone=timezone)
+        user = create_user(name=username, password=password, email=email)
         login_user(user)
 
         return {'message': 'User created successfully'}, 201

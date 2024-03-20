@@ -2,8 +2,7 @@ import pytest
 from flask import Flask
 from flask_login import LoginManager
 
-from application import create_app
-from main.db.database import init_db
+from main.db.database import init_db, db
 from main.db.models.User import User
 from main.extensions.exception_extension import register_exception_handler
 from main.extensions.routes_extension import register_routes
@@ -40,8 +39,8 @@ def app():
 
 @pytest.fixture()
 def client(app):
-    return app.test_client()
-
+    with app.test_client() as client, app.app_context():
+        yield client
 
 
 @pytest.fixture()
